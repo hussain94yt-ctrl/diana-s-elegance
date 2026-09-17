@@ -393,7 +393,7 @@ function DianaBeautySalonPage() {
             </p>
           </div>
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {services.map((service, index) => (
+            {services.map((service) => (
               <article
                 key={service.name}
                 className="animate-on-scroll group overflow-hidden border border-border bg-card shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-editorial"
@@ -527,7 +527,7 @@ function DianaBeautySalonPage() {
             </h2>
           </div>
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {whyChoose.map((item, index) => (
+            {whyChoose.map((item) => (
               <article
                 key={item.title}
                 className="animate-on-scroll border border-border bg-background p-6 shadow-soft"
