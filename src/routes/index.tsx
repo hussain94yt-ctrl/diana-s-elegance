@@ -397,7 +397,6 @@ function DianaBeautySalonPage() {
               <article
                 key={service.name}
                 className="animate-on-scroll group overflow-hidden border border-border bg-card shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-editorial"
-                style={{ animationDelay: `${Math.min(index, 5) * 60}ms` }}
               >
                 <div className="overflow-hidden">
                   <img
@@ -532,7 +531,6 @@ function DianaBeautySalonPage() {
               <article
                 key={item.title}
                 className="animate-on-scroll border border-border bg-background p-6 shadow-soft"
-                style={{ animationDelay: `${index * 70}ms` }}
               >
                 <div className="mb-6 grid size-12 place-items-center border border-champagne bg-champagne-soft text-primary">
                   <Sparkles className="size-5" aria-hidden="true" />
