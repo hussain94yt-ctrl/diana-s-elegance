@@ -168,6 +168,15 @@ const whyChoose = [
   },
 ];
 
+const reviewPlaceholders = [
+  "Google review to be added",
+  "Google review to be added",
+  "Google review to be added",
+  "Google review to be added",
+  "Google review to be added",
+  "Google review to be added",
+];
+
 function whatsappLink(message: string) {
   return `${baseWhatsapp}?text=${encodeURIComponent(message)}`;
 }
@@ -183,13 +192,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Diana Beauty Salon in Latifabad, Hyderabad offering beauty, bridal makeup, hair, skincare, nails and occasion beauty services. Book your appointment on WhatsApp.",
+          "Diana Beauty Salon in Latifabad, Hyderabad offering bridal makeup, hair styling, skincare, nails and professional beauty services. Book your appointment on WhatsApp.",
       },
       { property: "og:title", content: "Diana Beauty Salon | Latifabad Branch | Hyderabad" },
       {
         property: "og:description",
         content:
-          "Diana Beauty Salon in Latifabad, Hyderabad offering beauty, bridal makeup, hair, skincare, nails and occasion beauty services. Book your appointment on WhatsApp.",
+          "Diana Beauty Salon in Latifabad, Hyderabad offering bridal makeup, hair styling, skincare, nails and professional beauty services. Book your appointment on WhatsApp.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
@@ -230,7 +239,6 @@ export const Route = createFileRoute("/")({
 
 function DianaBeautySalonPage() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
   const [activeCategory, setActiveCategory] = useState("All");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
@@ -247,23 +255,6 @@ function DianaBeautySalonPage() {
     return () => {
       document.documentElement.style.scrollBehavior = "auto";
     };
-  }, []);
-
-  useEffect(() => {
-    const sections = navItems
-      .map((item) => document.querySelector(item.href))
-      .filter((section): section is Element => section !== null);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible?.id) setActiveSection(visible.id);
-      },
-      { rootMargin: "-20% 0px -65%", threshold: [0.05, 0.25, 0.5] },
-    );
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -295,7 +286,7 @@ function DianaBeautySalonPage() {
 
   return (
     <main id="home" className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} activeSection={activeSection} />
+      <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
       <section className="relative isolate min-h-[92svh] overflow-hidden bg-luxury text-primary-foreground">
         <img
@@ -306,18 +297,18 @@ function DianaBeautySalonPage() {
           className="absolute inset-0 -z-20 h-full w-full object-cover"
         />
         <div className="absolute inset-0 -z-10 bg-hero-overlay" />
-        <div className="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-background/30 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-t from-background to-transparent" />
 
         <div className="mx-auto grid min-h-[92svh] w-full max-w-7xl items-end px-4 pb-16 pt-28 sm:px-6 lg:px-8 lg:pb-20">
           <div className="max-w-4xl animate-fade-up">
-            <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary-foreground/30 bg-veil px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-ivory-muted shadow-soft backdrop-blur">
+            <p className="mb-5 inline-flex items-center gap-2 border border-champagne/40 bg-veil px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-champagne shadow-soft backdrop-blur">
               <Sparkles className="size-4" aria-hidden="true" />
               Latifabad Unit 8 · Hyderabad
             </p>
             <h1 className="font-display text-5xl leading-none text-primary-foreground sm:text-7xl lg:text-8xl">
               DIANA BEAUTY SALON
             </h1>
-            <p className="mt-5 font-display text-3xl text-secondary sm:text-5xl">
+            <p className="mt-5 font-display text-3xl text-champagne sm:text-5xl">
               Where Beauty Meets Elegance
             </p>
             <p className="mt-6 max-w-2xl text-base leading-8 text-ivory-muted sm:text-lg">
@@ -339,15 +330,15 @@ function DianaBeautySalonPage() {
         </div>
       </section>
 
-      <section aria-label="Business information" className="border-y border-border bg-background">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-border px-4 py-6 sm:px-6 lg:grid-cols-4 lg:divide-y-0 lg:px-8">
+      <section aria-label="Business information" className="border-y border-border bg-surface">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-4 py-4 sm:px-6 lg:grid-cols-4 lg:px-8">
           {[
             ["4.5★", "Google Rating"],
             ["36+", "Google Reviews"],
             ["Bridal Beauty", "Bridal & Occasion Looks"],
             ["Latifabad", "Unit 8, Hyderabad"],
           ].map(([value, label]) => (
-            <div key={value} className="px-4 py-6 text-center">
+            <div key={value} className="bg-background px-4 py-6 text-center shadow-soft">
               <p className="font-display text-3xl text-primary">{value}</p>
               <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                 {label}
@@ -405,7 +396,7 @@ function DianaBeautySalonPage() {
             {services.map((service) => (
               <article
                 key={service.name}
-                className="animate-on-scroll group overflow-hidden rounded-lg border border-border bg-card shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-editorial"
+                className="animate-on-scroll group overflow-hidden border border-border bg-card shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-editorial"
               >
                 <div className="overflow-hidden">
                   <img
@@ -457,7 +448,7 @@ function DianaBeautySalonPage() {
             </div>
           </div>
           <div className="animate-on-scroll order-1 lg:order-2">
-            <div className="relative rounded-lg border border-champagne/30 p-3 shadow-editorial">
+            <div className="relative border border-champagne/30 p-3 shadow-editorial">
               <img
                 src={bridalImage}
                 alt="Elegant bridal makeup service for a South Asian bride"
@@ -466,7 +457,7 @@ function DianaBeautySalonPage() {
                 loading="lazy"
                 className="aspect-[4/5] w-full object-cover"
               />
-              <div className="absolute -bottom-5 left-5 right-5 rounded-md border border-champagne/30 bg-veil p-5 shadow-soft backdrop-blur">
+              <div className="absolute -bottom-5 left-5 right-5 border border-champagne/30 bg-veil p-5 shadow-soft backdrop-blur">
                 <p className="text-sm font-semibold uppercase tracking-[0.22em] text-champagne">
                   Bridal · Makeup · Hair · Mehndi
                 </p>
@@ -508,7 +499,7 @@ function DianaBeautySalonPage() {
                 key={`${item.title}-${activeCategory}`}
                 type="button"
                 onClick={() => setLightboxIndex(index)}
-                 className="animate-on-scroll group mb-5 block w-full break-inside-avoid overflow-hidden rounded-lg border border-border bg-card text-left shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-editorial focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="animate-on-scroll group mb-5 block w-full break-inside-avoid overflow-hidden border border-border bg-card text-left shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-editorial focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <img
                   src={item.image}
@@ -539,7 +530,7 @@ function DianaBeautySalonPage() {
             {whyChoose.map((item) => (
               <article
                 key={item.title}
-                className="animate-on-scroll rounded-lg border border-border bg-background p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-editorial"
+                className="animate-on-scroll border border-border bg-background p-6 shadow-soft"
               >
                 <div className="mb-6 grid size-12 place-items-center border border-champagne bg-champagne-soft text-primary">
                   <Sparkles className="size-5" aria-hidden="true" />
@@ -554,24 +545,21 @@ function DianaBeautySalonPage() {
         </div>
       </section>
 
-      <section id="reviews" className="scroll-mt-24 bg-surface py-20 sm:py-28">
+      <section id="reviews" className="scroll-mt-24 bg-background py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="animate-on-scroll grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
             <div>
               <p className="section-kicker">Reviews</p>
               <h2 className="mt-3 font-display text-4xl leading-tight text-primary sm:text-6xl">
-                Customer Reviews
+                What Our Clients Say
               </h2>
-              <p className="mt-5 max-w-lg text-base leading-7 text-muted-foreground">
-                See current customer feedback and the latest rating directly on our Google listing.
-              </p>
-              <div className="mt-8 rounded-lg border border-border bg-background p-6 shadow-soft">
+              <div className="mt-8 border border-border bg-surface p-6 shadow-soft">
                 <div className="flex items-center gap-3">
                   <Star className="size-6 fill-current text-champagne" aria-hidden="true" />
                   <p className="font-display text-5xl text-primary">4.5 / 5</p>
                 </div>
                 <p className="mt-2 text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                   Google Rating · 36 Reviews
+                  Google Rating · 36+ Reviews
                 </p>
                 <Button asChild variant="outlineLuxury" size="lg" className="mt-6">
                   <a href={mapsUrl} target="_blank" rel="noreferrer">
@@ -580,16 +568,20 @@ function DianaBeautySalonPage() {
                 </Button>
               </div>
             </div>
-            <div className="animate-on-scroll grid min-h-80 place-items-center rounded-lg border border-border bg-background p-8 text-center shadow-soft">
-              <div className="max-w-md">
-                <div className="mx-auto grid size-14 place-items-center rounded-full bg-surface text-primary">
-                  <Star className="size-6 fill-current" aria-hidden="true" />
-                </div>
-                <p className="mt-6 font-display text-3xl leading-tight text-primary">Verified feedback, where it belongs.</p>
-                <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                  Review text is not reproduced here without a verified source. Visit Google Maps to read the latest public customer reviews.
-                </p>
-              </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {reviewPlaceholders.map((text, index) => (
+                <article key={index} className="animate-on-scroll border border-border bg-card p-5 shadow-soft">
+                  <div className="flex gap-1 text-champagne" aria-label="Placeholder five star rating">
+                    {Array.from({ length: 5 }).map((_, starIndex) => (
+                      <Star key={starIndex} className="size-4 fill-current" aria-hidden="true" />
+                    ))}
+                  </div>
+                  <p className="mt-5 font-display text-2xl text-card-foreground">{text}</p>
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                    Replace with verified customer review text from the Google listing.
+                  </p>
+                </article>
+              ))}
             </div>
           </div>
         </div>
@@ -625,7 +617,8 @@ function DianaBeautySalonPage() {
               Ready for Your Next Look?
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-ivory-muted">
-               Book your appointment with Diana Beauty Salon for your next beauty or bridal occasion.
+              Book your appointment with Diana Beauty Salon and let us help you prepare for your next
+              special moment.
             </p>
             <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
               <Button asChild variant="luxury" size="xl">
@@ -652,7 +645,7 @@ function DianaBeautySalonPage() {
             </h2>
           </div>
           <div className="grid gap-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
-            <div className="animate-on-scroll rounded-lg border border-border bg-surface p-6 shadow-soft sm:p-8">
+            <div className="animate-on-scroll border border-border bg-surface p-6 shadow-soft sm:p-8">
               <h3 className="font-display text-3xl text-primary">Diana Beauty Salon | Latifabad Branch</h3>
               <div className="mt-7 space-y-6 text-muted-foreground">
                 <p className="flex gap-3 leading-7">
@@ -684,7 +677,7 @@ function DianaBeautySalonPage() {
                 </Button>
               </div>
             </div>
-            <div className="animate-on-scroll overflow-hidden rounded-lg border border-border bg-card shadow-editorial">
+            <div className="animate-on-scroll overflow-hidden border border-border bg-card shadow-editorial">
               <iframe
                 title="Diana Beauty Salon location map in Latifabad Unit 8 Hyderabad"
                 src="https://www.google.com/maps?q=Latifabad%20Unit%208%2C%20Hyderabad%2C%20Sindh%2C%20Pakistan&output=embed"
@@ -707,7 +700,7 @@ function DianaBeautySalonPage() {
           aria-modal="true"
           aria-label="Gallery image viewer"
         >
-          <div className="relative max-h-full w-full max-w-5xl rounded-lg border border-champagne/30 bg-background p-3 shadow-editorial">
+          <div className="relative max-h-full w-full max-w-5xl border border-champagne/30 bg-background p-3 shadow-editorial">
             <img
               src={activeLightboxItem.image}
               alt={activeLightboxItem.alt}
@@ -764,16 +757,14 @@ function DianaBeautySalonPage() {
 function Navbar({
   menuOpen,
   setMenuOpen,
-  activeSection,
 }: {
   menuOpen: boolean;
   setMenuOpen: (open: boolean) => void;
-  activeSection: string;
 }) {
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-b border-nav-border bg-nav backdrop-blur-xl">
       <nav className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 sm:px-6 lg:flex lg:px-8" aria-label="Primary navigation">
-        <a href="#home" className="min-w-0 font-display text-lg uppercase tracking-[0.16em] text-primary sm:text-2xl">
+        <a href="#home" className="min-w-0 font-display text-xl uppercase tracking-[0.2em] text-primary-foreground sm:text-2xl">
           <span className="block truncate">Diana Beauty Salon</span>
         </a>
         <div className="hidden flex-1 items-center justify-center gap-1 lg:flex">
@@ -781,8 +772,7 @@ function Navbar({
             <a
               key={item.label}
               href={item.href}
-              aria-current={activeSection === item.href.slice(1) ? "location" : undefined}
-              className={`relative px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${activeSection === item.href.slice(1) ? "text-primary after:absolute after:inset-x-3 after:-bottom-1 after:h-px after:bg-secondary-foreground" : "text-muted-foreground hover:text-primary"}`}
+              className="px-3 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-ivory-muted transition hover:text-champagne focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne"
             >
               {item.label}
             </a>
@@ -796,7 +786,7 @@ function Navbar({
           </Button>
         </div>
         <div className="flex items-center gap-2 lg:hidden">
-          <Button asChild variant="luxury" size="sm">
+          <Button asChild variant="luxury" size="sm" className="hidden xs:inline-flex">
             <a href={whatsappLink(generalMessage)} target="_blank" rel="noreferrer">
               Book
             </a>
@@ -821,8 +811,7 @@ function Navbar({
                 key={item.label}
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
-                aria-current={activeSection === item.href.slice(1) ? "location" : undefined}
-                className={`rounded-md px-3 py-3 text-sm font-semibold uppercase tracking-[0.14em] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${activeSection === item.href.slice(1) ? "bg-surface text-primary" : "text-muted-foreground hover:bg-surface hover:text-primary"}`}
+                className="py-3 text-sm font-semibold uppercase tracking-[0.16em] text-ivory-muted transition hover:text-champagne focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne"
               >
                 {item.label}
               </a>
@@ -891,9 +880,7 @@ function FloatingWhatsapp() {
       aria-label="Book on WhatsApp"
       className="fixed bottom-5 right-5 z-40 grid size-12 place-items-center rounded-full bg-whatsapp text-whatsapp-foreground shadow-floating transition hover:-translate-y-1 hover:bg-whatsapp-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:bottom-6 sm:right-6"
     >
-      <svg viewBox="0 0 32 32" className="size-6 fill-current" aria-hidden="true">
-        <path d="M19.11 17.55c-.17-.09-1.01-.5-1.17-.56-.16-.06-.27-.09-.39.09-.11.17-.44.56-.54.67-.1.11-.2.13-.37.04-.17-.09-.72-.26-1.36-.84-.5-.45-.84-1-.94-1.17-.1-.17-.01-.26.08-.35.08-.08.17-.2.26-.3.09-.1.11-.17.17-.28.06-.11.03-.22-.01-.3-.04-.09-.39-.93-.53-1.27-.14-.34-.28-.29-.39-.3h-.33c-.11 0-.3.04-.46.22-.16.17-.6.59-.6 1.44s.62 1.67.71 1.79c.09.11 1.22 1.86 2.95 2.61.41.18.73.28.98.36.41.13.79.11 1.09.07.33-.05 1.01-.41 1.15-.81.14-.4.14-.74.1-.81-.04-.07-.16-.11-.33-.2m-3.08 7.05h-.01a8.46 8.46 0 0 1-4.31-1.18l-.31-.18-3.2.84.85-3.12-.2-.32a8.47 8.47 0 1 1 7.18 3.96m7.21-15.68A10.13 10.13 0 0 0 16.02 5C10.42 5 5.87 9.55 5.87 15.15c0 1.79.47 3.54 1.36 5.08L5.79 25.5l5.39-1.42a10.14 10.14 0 0 0 4.84 1.23h.01c5.59 0 10.15-4.55 10.15-10.15 0-2.71-1.04-5.26-2.94-7.18" />
-      </svg>
+      <span className="text-lg font-bold">WA</span>
     </a>
   );
 }
