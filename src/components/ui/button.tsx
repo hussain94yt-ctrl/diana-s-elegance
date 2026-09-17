@@ -17,14 +17,14 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         luxury:
-          "border border-champagne bg-champagne text-champagne-foreground shadow-soft hover:bg-primary hover:text-primary-foreground hover:border-primary",
+          "border border-secondary bg-secondary text-secondary-foreground shadow-soft hover:border-primary hover:bg-primary hover:text-primary-foreground",
         glass:
           "border border-champagne/50 bg-veil text-primary-foreground shadow-soft hover:bg-champagne hover:text-champagne-foreground",
         outlineLuxury:
-          "border border-champagne bg-background text-primary shadow-soft hover:bg-primary hover:text-primary-foreground hover:border-primary",
+          "border border-primary/25 bg-background text-primary shadow-soft hover:border-primary hover:bg-primary hover:text-primary-foreground",
         tab: "border border-border bg-background text-muted-foreground shadow-sm hover:border-champagne hover:text-primary",
-        tabActive: "border border-champagne bg-primary text-primary-foreground shadow-soft",
-        textGold: "text-primary hover:text-champagne shadow-none",
+        tabActive: "border border-primary bg-primary text-primary-foreground shadow-soft",
+        textGold: "text-primary hover:text-secondary-foreground shadow-none",
       },
       size: {
         default: "h-9 px-4 py-2",
