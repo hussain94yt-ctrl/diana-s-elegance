@@ -59,7 +59,6 @@
   --color-whatsapp: var(--whatsapp);
   --color-whatsapp-hover: var(--whatsapp-hover);
   --color-whatsapp-foreground: var(--whatsapp-foreground);
-  --color-hero-overlay: var(--hero-overlay);
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
   --shadow-soft: var(--shadow-soft);
@@ -178,6 +177,10 @@
   animation: fade-up 700ms ease-out both;
   animation-timeline: view();
   animation-range: entry 0% cover 26%;
+}
+
+@utility bg-hero-overlay {
+  background: var(--hero-overlay);
 }
 
 @utility section-kicker {
