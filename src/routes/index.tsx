@@ -878,7 +878,7 @@ function FloatingWhatsapp() {
       target="_blank"
       rel="noreferrer"
       aria-label="Book on WhatsApp"
-      className="fixed bottom-5 right-5 z-40 grid size-13 place-items-center rounded-full bg-whatsapp text-whatsapp-foreground shadow-floating transition hover:-translate-y-1 hover:bg-whatsapp-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:bottom-6 sm:right-6"
+      className="fixed bottom-5 right-5 z-40 grid size-12 place-items-center rounded-full bg-whatsapp text-whatsapp-foreground shadow-floating transition hover:-translate-y-1 hover:bg-whatsapp-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:bottom-6 sm:right-6"
     >
       <span className="text-lg font-bold">WA</span>
     </a>
